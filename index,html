@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="cookie.css">
+  <style>
+    .cookie-modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, .5);
+  overflow: hidden;
+  display: none;
+  font-family: sans-serif;
+  font-size: 15px;
+  line-height: 1.3;
+}
+
+.cookieTitle {
+  font-size: 20px;
+}
+
+.cookie-container {
+  display: -ms-flexbox;
+  display: flex;
+  height: inherit;
+}
+
+.inner {
+  margin: auto;
+  width: 300px;
+  background: white;
+  font-family: inherit;
+  padding: 15px;
+}
+
+.cookieButton {
+  margin-top: 10px;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: column;
+}
+
+.cookieButton button {
+  border: 1px solid #666;
+  background: white;
+  padding: 8px;
+  transition: box-shadow 300ms linear;
+}
+
+.cookieButton button:hover {
+  box-shadow: 0 0 4px #666;
+}
+
+.cookieButton button+button {
+  margin-top: 10px;
+  background: #1e87f0;
+  color: white;
+  border: none;
+  padding: 10px;
+}
+  </style>
+</head>
+
+<body>
+
+  <h1>Test</h1>
+  <!-- Google Tag Manager -->
+  <script>
+    if(localStorage.getItem('pwAllowCookies')){
+
+  }
+  </script>
+  <!-- End Google Tag Manager -->
+
+
+
+  <script asnyc>
+  var purecookieTitle = "Cookie-Einstellungen."; // Title
+var purecookieDesc = "Auf dieser Webseite werden Cookies gespeichert damit wir mit Webanalyse Ihr Nutzererlebnis kontinuierlich verbessern können. Sie können selbst entscheiden, ob Sie unsere Cookies für die Auswertung anonymer Statistiken zulassen möchten."; // Description
+var purecookieLink = 'Weitere Informationen finden Sie in unserer: <a href="/datenschutz" target="_blank">Datenschutzerklärung</a>';
+var checkbox1 = '<label><input type="checkbox" name="essential" value="essential" checked disabled><label>Essenziell</label>';
+var checkbox2 = '<label><input type="checkbox" id="statistics" name="statistics" value="statistics">Statistiken</label>'
+var cookieAccept = "Alle Akzeptieren"; // Button text
+var cookieSetting = "Auswahl bestätigen";
+
+function pureFadeIn(elem, display) {
+  var el = document.getElementById(elem);
+  el.style.opacity = 0;
+  el.style.display = display || "block";
+
+  (function fade() {
+    var val = parseFloat(el.style.opacity);
+    if (!((val += .02) > 1)) {
+      el.style.opacity = val;
+      requestAnimationFrame(fade);
+    }
+  })();
+};
+
+var cookieModal = '';
+var pwSelectionMade = '';
+var pwAllowCookie = '';
+
+function cookieConsent() {
+  if (!localStorage.getItem('pwSelectionMade')) {
+    document.body.innerHTML += '<div class="cookie-modal" id="cookie-modal"><div class="cookie-container"><div class="inner"><div class="cookieTitle"><p>' + purecookieTitle + '</p></div><div class="cookieDesc"><p>' + purecookieDesc + ' ' + purecookieLink + '</p></div><div class="checkbox-wrapper">' + checkbox1 + '</div><div class="checkbox-wrapper">' + checkbox2 + '</div><div class="cookieButton"><button onClick="setting();">' + cookieSetting + '</button><button onClick="accept();">' + cookieAccept + '</button></div></div></div></div>';
+    pureFadeIn("cookie-modal");
+    cookieModal = document.getElementById('cookie-modal');
+    document.body.style.overflow = 'hidden';
+
+  }
+}
+
+function accept() {
+  document.body.style.overflow = 'visible';
+  localStorage.setItem('pwSelectionMade', 'y');
+  localStorage.setItem('pwAllowCookies', 'y');
+  cookieModal.remove();
+}
+
+function setting() {
+  document.body.style.overflow = 'visible';
+  var statistics = document.getElementById('statistics');
+  localStorage.setItem('pwSelectionMade', 'y');;
+  if (statistics.checked == true) {
+    localStorage.setItem('pwAllowCookies', 'y')
+  }
+
+
+  cookieModal.remove();
+}
+
+
+window.onload = function() {
+  cookieConsent();
+};
+  </script>
+
+</html>
